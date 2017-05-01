@@ -55,7 +55,7 @@ export default class App extends Component {
               let css = {
                   clearfix: "clearfix",
                   label: "bold right-align col col-2",
-                  value: "col col-9 ml1"
+                  value: "col col-9 ml2"
               }
               let thisCarType = carTypes.filter((a) => {
                   if(a.CarTypeCode === o.CarTypeCode){
