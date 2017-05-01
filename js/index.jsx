@@ -21,7 +21,7 @@ export default class App extends Component {
         <div>
             <div className="clearfix">
                 <section className="sm-col sm-col-3 px1">
-                    <h2>Find a Rental Car</h2>
+                    <h2 className="center">Find</h2>
                     <div className="border mb1 rounded p1 bg-white clearfix">
                         <div className="mb1"><label className="right-align col col-4 mr1">Location</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
                         <div className="mb1"><label className="right-align col col-4 mr1">Pick Up Date</label><input type="text" name="pickup" placeholder={today}/></div>
@@ -31,7 +31,7 @@ export default class App extends Component {
                 </section>
                 <section className="sm-col sm-col-9 px1">
                     <div>
-                        <h2 className="center">Rental Cars Available</h2>
+                        <h2 className="center">Available</h2>
                         <ul className="list-reset mt0">
                            {this.setResultsDisplay()}
                         </ul>
@@ -52,6 +52,11 @@ export default class App extends Component {
 
       return (
           results.map((o,i) => {
+              let css = {
+                  clearfix: "clearfix",
+                  label: "bold right-align col col-2",
+                  value: "col col-9 ml1"
+              }
               let thisCarType = carTypes.filter((a) => {
                   if(a.CarTypeCode === o.CarTypeCode){
                       return a
@@ -59,19 +64,19 @@ export default class App extends Component {
               })
               return (
                   <li key={i} className="border mb2 rounded p1 bg-white">
-                      <div>Type: {thisCarType[0].CarTypeName}</div>
-                      <div>Models: {thisCarType[0].PossibleModels}</div>
-                      <div>Features: {thisCarType[0].PossibleFeatures}</div>
-                      <div>Seats: {thisCarType[0].TypicalSeating}</div>
-                      <div>Mileage: {o.MileageDescription}</div>
-                      <div>Location: {o.LocationDescription} ({o.PickupAirport})</div>
-                      <div>Daily Rate: ${o.DailyRate}</div>
-                      <div>Pick Up: {o.PickupDay} at {o.PickupTime}</div>
-                      <div>Drop Off: {o.DropoffDay} at {o.DropoffTime}</div>
-                      <div>Rental Days: {o.RentalDays}</div>
-                      <div>Sub Total: ${o.SubTotal}</div>
-                      <div>Taxes and Fees: ${o.TaxesAndFees}</div>
-                      <div>Total Price: ${o.TotalPrice}</div>
+                      <h3 className="mt0">Type: {thisCarType[0].CarTypeName}</h3>
+                      <div className={css.clearfix}><span className={css.label}>Models: </span><span className={css.value}>{thisCarType[0].PossibleModels}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Features:  </span><span className={css.value}>{thisCarType[0].PossibleFeatures}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Seats:  </span><span className={css.value}>{thisCarType[0].TypicalSeating}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Mileage:  </span><span className={css.value}>{o.MileageDescription}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Location:  </span><span className={css.value}>{o.LocationDescription} ({o.PickupAirport})</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Daily Rate:  </span><span className={css.value}>${o.DailyRate}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Pick Up:  </span><span className={css.value}>{o.PickupDay} at {o.PickupTime}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Drop Off:  </span><span className={css.value}>{o.DropoffDay} at {o.DropoffTime}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Rental Days:  </span><span className={css.value}>{o.RentalDays}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Sub Total:  </span><span className={css.value}>${o.SubTotal}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Taxes & Fees:  </span><span className={css.value}>${o.TaxesAndFees}</span></div>
+                      <div className={css.clearfix}><span className={css.label}>Total Price:  </span><span className={css.value}>${o.TotalPrice}</span></div>
                   </li>
               )
           })
