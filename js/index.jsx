@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
+import moment from 'moment'
 
 export default class App extends Component {
   constructor(props) {
@@ -14,15 +15,24 @@ export default class App extends Component {
   }
 
   render() {
+  let today = moment().format("MM/DD/YYYY"),
+   tomorrow = moment().add(1,'days').format("MM/DD/YYYY")
     return (
         <div>
             <div className="clearfix">
-                <section className="sm-col sm-col-4">
-                    <button onClick={this.handleClick}>Search</button>
+                <section className="sm-col sm-col-3 px1">
+                    <h2>Find a Rental Car</h2>
+                    <div className="border mb1 rounded p1 bg-white clearfix">
+                        <div className="mb1"><label className="right-align col col-4 mr1">Location</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
+                        <div className="mb1"><label className="right-align col col-4 mr1">Pick Up Date</label><input type="text" name="pickup" placeholder={today}/></div>
+                        <div className="mb1"><label className="right-align col col-4 mr1">Drop Off Date</label><input type="text" name="dropoff" placeholder={tomorrow}/></div>
+                        <div className="mb1 right-align col col-10 pr2"><button onClick={this.handleClick}>Search</button></div>
+                    </div>
                 </section>
-                <section className="sm-col sm-col-8">
+                <section className="sm-col sm-col-9 px1">
                     <div>
-                        <ul className="list-reset">
+                        <h2 className="center">Rental Cars Available</h2>
+                        <ul className="list-reset mt0">
                            {this.setResultsDisplay()}
                         </ul>
                     </div>
@@ -48,7 +58,7 @@ export default class App extends Component {
                   }
               })
               return (
-                  <li key={i} className="border">
+                  <li key={i} className="border mb2 rounded p1 bg-white">
                       <div>Type: {thisCarType[0].CarTypeName}</div>
                       <div>Models: {thisCarType[0].PossibleModels}</div>
                       <div>Features: {thisCarType[0].PossibleFeatures}</div>
@@ -81,6 +91,14 @@ export default class App extends Component {
 
   setResultsError(error){
       console.log('error', error)
+      let data = {},
+      carTypes = [{CarTypeCode:"error"}],
+      results = [{CarTypeCode:"error",CarTypeName:"Network Error.  Please Try Again"}]
+      this.setState({
+          data,
+          carTypes,
+          results,
+      })
   }
 
 
