@@ -53,9 +53,9 @@ export default class App extends Component {
       return (
           results.map((o,i) => {
               let css = {
-                  clearfix: "clearfix",
-                  label: "bold right-align col col-2",
-                  value: "col col-9 ml2"
+                  container: "mb1",
+                  label: "block bold",
+                  value: "block"
               }
               let thisCarType = carTypes.filter((a) => {
                   if(a.CarTypeCode === o.CarTypeCode){
@@ -65,18 +65,18 @@ export default class App extends Component {
               return (
                   <li key={i} className="border mb2 rounded p1 bg-white">
                       <h3 className="mt0">Type: {thisCarType[0].CarTypeName}</h3>
-                      <div className={css.clearfix}><span className={css.label}>Models: </span><span className={css.value}>{thisCarType[0].PossibleModels}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Features:  </span><span className={css.value}>{thisCarType[0].PossibleFeatures}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Seats:  </span><span className={css.value}>{thisCarType[0].TypicalSeating}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Mileage:  </span><span className={css.value}>{o.MileageDescription}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Location:  </span><span className={css.value}>{o.LocationDescription} ({o.PickupAirport})</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Daily Rate:  </span><span className={css.value}>${o.DailyRate}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Pick Up:  </span><span className={css.value}>{o.PickupDay} at {o.PickupTime}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Drop Off:  </span><span className={css.value}>{o.DropoffDay} at {o.DropoffTime}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Rental Days:  </span><span className={css.value}>{o.RentalDays}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Sub Total:  </span><span className={css.value}>${o.SubTotal}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Taxes & Fees:  </span><span className={css.value}>${o.TaxesAndFees}</span></div>
-                      <div className={css.clearfix}><span className={css.label}>Total Price:  </span><span className={css.value}>${o.TotalPrice}</span></div>
+                      <div className={css.container}><span className={css.label}>Models: </span><span className={css.value}>{thisCarType[0].PossibleModels}</span></div>
+                      <div className={css.container}><span className={css.label}>Features:  </span><span className={css.value}>{thisCarType[0].PossibleFeatures}</span></div>
+                      <div className={css.container}><span className={css.label}>Seats:  </span><span className={css.value}>{thisCarType[0].TypicalSeating}</span></div>
+                      <div className={css.container}><span className={css.label}>Mileage:  </span><span className={css.value}>{o.MileageDescription}</span></div>
+                      <div className={css.container}><span className={css.label}>Location:  </span><span className={css.value}>{o.LocationDescription} ({o.PickupAirport})</span></div>
+                      <div className={css.container}><span className={css.label}>Daily Rate:  </span><span className={css.value}>${o.DailyRate}</span></div>
+                      <div className={css.container}><span className={css.label}>Pick Up:  </span><span className={css.value}>{o.PickupDay} at {o.PickupTime}</span></div>
+                      <div className={css.container}><span className={css.label}>Drop Off:  </span><span className={css.value}>{o.DropoffDay} at {o.DropoffTime}</span></div>
+                      <div className={css.container}><span className={css.label}>Rental Days:  </span><span className={css.value}>{o.RentalDays}</span></div>
+                      <div className={css.container}><span className={css.label}>Sub Total:  </span><span className={css.value}>${o.SubTotal}</span></div>
+                      <div className={css.container}><span className={css.label}>Taxes & Fees:  </span><span className={css.value}>${o.TaxesAndFees}</span></div>
+                      <div className={css.container}><span className={css.label}>Total Price:  </span><span className={css.value}>${o.TotalPrice}</span></div>
                   </li>
               )
           })
