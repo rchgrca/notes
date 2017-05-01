@@ -4,6 +4,7 @@
   "description": "notes",
   "main": "index.jsx",
   "dependencies": {
+    "axios": "^0.16.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
@@ -35,8 +36,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-      "type": "git",
-      "url": "https://github.com/rchgrca/notes.git"
+    "type": "git",
+    "url": "https://github.com/rchgrca/notes.git"
   },
   "author": "Richard Garcia",
   "license": "ISC"
