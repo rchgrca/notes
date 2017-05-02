@@ -9,7 +9,7 @@ export default class App extends Component {
     this.state = {
         networkError:false,
         loading:false,
-        location:'SFO',
+        airport:'SFO',
         dropoff:moment().format("MM/DD/YYYY"),
         pickup:moment().add(7,'days').format("MM/DD/YYYY"),
         data:{},
@@ -31,11 +31,11 @@ export default class App extends Component {
             <div className="clearfix">
                 <section className="sm-col sm-col-3 px1">
                     <h2 className="center">Find</h2>
-                    <div className="border mb1 rounded p1 bg-white clearfix">
-                        <div className="mb1"><label className="right-align col col-4 mr1">Location</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
-                        <div className="mb1"><label className="right-align col col-4 mr1">Pick Up Date</label><input type="text" name="pickup" placeholder={today}/></div>
-                        <div className="mb1"><label className="right-align col col-4 mr1">Drop Off Date</label><input type="text" name="dropoff" placeholder={tomorrow}/></div>
-                        <div className="mb1 right-align col col-10 pr2"><button onClick={this.handleClick}>Search</button></div>
+                    <div className="border mb1 rounded p1 bg-white clearfix border--green">
+                        <div className="mb1"><label className="right-align col col-3 mr1">Airport</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
+                        <div className="mb1"><label className="right-align col col-3 mr1">Pick Up</label><input type="text" name="pickup" placeholder={today}/></div>
+                        <div className="mb1"><label className="right-align col col-3 mr1">Drop Off</label><input type="text" name="dropoff" placeholder={tomorrow}/></div>
+                        <div className="mb1 right-align col col-8"><button className="border rounded bg-green white" onClick={this.handleClick}>Search</button></div>
                     </div>
                 </section>
                 <section className="sm-col sm-col-9 px1">
@@ -58,7 +58,7 @@ export default class App extends Component {
 
   getEmptyDataMessage(){
       return (
-          <li className="border mb2 rounded p1 bg-white center">Please enter a "Location" and "Pick Up" and "Drop Off" dates.</li>
+          <li className="border mb2 rounded p1 bg-white center border--green">Please enter a "Location" and "Pick Up" and "Drop Off" dates.</li>
       )
   }
 
@@ -71,7 +71,7 @@ export default class App extends Component {
 
   getLoadingMessage(){
       return (
-          <li className="border mb2 rounded p1 bg-white center"><span className="green">Loading...</span></li>
+          <li className="border mb2 rounded p1 bg-white center border--green"><span className="green">Loading...</span></li>
       )
   }
 
@@ -87,7 +87,7 @@ export default class App extends Component {
                   }
               })
               return (
-                  <li key={i} className="border mb2 rounded p1 bg-white">
+                  <li key={i} className="border mb2 rounded p1 bg-white  border--green">
                       <h3 className="mt0">{thisCarType[0].CarTypeName}</h3>
                       <div className="mb1"><div className="bold">Models: </div><div>{thisCarType[0].PossibleModels}</div></div>
                       <div className="mb1"><div className="bold">Features:  </div><div>{thisCarType[0].PossibleFeatures}</div></div>
@@ -118,7 +118,7 @@ export default class App extends Component {
 
   getResultsError(error){
       return (
-          <li className="border mb2 rounded p1 bg-white center"><span className="red">Network Error.  Please refresh and try again.</span></li>
+          <li className="border mb2 rounded p1 bg-white center border--green"><span className="red">Network Error.  Please refresh and try again.</span></li>
       )
   }
 
