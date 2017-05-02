@@ -17,8 +17,8 @@ export default class App extends Component {
   }
 
   render() {
-    let today = moment().format("MM/DD/YYYY"),
-     tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
+         let today = moment().format("MM/DD/YYYY"),
+          tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
     displayContent = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
     displayContent = this.state.networkError ? this.getResultsError() : displayContent
     return (
