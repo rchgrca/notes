@@ -7,6 +7,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        loading:false,
         data:{},
         carTypes:[],
         results:[]
@@ -15,8 +16,9 @@ export default class App extends Component {
   }
 
   render() {
-  let today = moment().format("MM/DD/YYYY"),
-   tomorrow = moment().add(1,'days').format("MM/DD/YYYY")
+    let today = moment().format("MM/DD/YYYY"),
+     tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
+    isLoading = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
     return (
         <div>
             <div className="clearfix">
@@ -33,7 +35,7 @@ export default class App extends Component {
                     <div>
                         <h2 className="center">Available</h2>
                         <ul className="list-reset mt0">
-                           {this.setResultsDisplay()}
+                           {isLoading}
                         </ul>
                     </div>
                 </section>
@@ -43,7 +45,20 @@ export default class App extends Component {
   }
 
   handleClick(){
+      this.setLoadingMessage()
       this.fetchSearchResults()
+  }
+
+  setLoadingMessage(){
+      this.setState({
+          loading: true
+      })
+  }
+
+  getLoadingMessage(){
+      return (
+          <li className="border mb2 rounded p1 bg-white center">Loading...</li>
+      )
   }
 
   setResultsDisplay(){
@@ -64,7 +79,7 @@ export default class App extends Component {
               })
               return (
                   <li key={i} className="border mb2 rounded p1 bg-white">
-                      <h3 className="mt0">Type: {thisCarType[0].CarTypeName}</h3>
+                      <h3 className="mt0">{thisCarType[0].CarTypeName}</h3>
                       <div className={css.container}><span className={css.label}>Models: </span><span className={css.value}>{thisCarType[0].PossibleModels}</span></div>
                       <div className={css.container}><span className={css.label}>Features:  </span><span className={css.value}>{thisCarType[0].PossibleFeatures}</span></div>
                       <div className={css.container}><span className={css.label}>Seats:  </span><span className={css.value}>{thisCarType[0].TypicalSeating}</span></div>
@@ -88,6 +103,7 @@ export default class App extends Component {
       carTypes = data.MetaData.CarMetaData.CarTypes,
       results = data.Result
       this.setState({
+          loading:false,
           data,
           carTypes,
           results,
