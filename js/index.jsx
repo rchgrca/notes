@@ -101,8 +101,7 @@ export default class App extends Component {
   }
 
   setResultsDisplay(){
-      let carTypes = this.state.carTypes,
-           results = this.state.results
+      let { carTypes, results } = this.state
 
       return (
           results.map((o,i) => {
