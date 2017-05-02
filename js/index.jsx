@@ -21,12 +21,16 @@ export default class App extends Component {
   }
 
   render() {
-         let today = moment().format("MM/DD/YYYY"),
-          tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
-       isEmptyData = Object.keys(this.state.data).length === 0 && this.state.data.constructor === Object ? true : false,
-    displayContent = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
-    displayContent = isEmptyData ? this.getEmptyDataMessage() : displayContent
-    displayContent = this.state.networkError ? this.getResultsError() : displayContent
+    let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
+        nextweek = moment().add(7,'days').format("MM/DD/YYYY"),
+    displayContent
+
+    let { loading, networkError, airport, pickup, dropoff } = this.state
+
+    displayContent = loading ? this.getLoadingMessage() : this.setResultsDisplay()
+    displayContent = this.isEmptyData() ? this.getEmptyDataMessage() : displayContent
+    displayContent = networkError ? this.getResultsError() : displayContent
+
     return (
         <div>
             <div className="clearfix">
@@ -35,18 +39,18 @@ export default class App extends Component {
                     <div className="border mb1 rounded p1 bg-white clearfix border--green">
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Airport</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={this.state.airport} className="col-3" placeholder={"SFO"}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={airport} className="field col-3" placeholder={"SFO"}/>
                         </div>
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Pick Up</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={this.state.pickup} className="col-3" placeholder={today}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={pickup} className="field col-3" placeholder={tomorrow}/>
                         </div>
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Drop Off</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={this.state.dropoff} className="col-3" placeholder={tomorrow}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={dropoff} className="field col-3" placeholder={nextweek}/>
                         </div>
-                        <div className="mb1 center">
-                            <button className="h4 border rounded bg-green white" onClick={this.handleSubmit}>Search</button>
+                        <div className="center">
+                            <button className="h4 rounded bg-green white" onClick={this.handleSubmit}>Search</button>
                         </div>
                     </div>
                 </section>
@@ -61,6 +65,11 @@ export default class App extends Component {
             </div>
         </div>
     )
+  }
+
+  isEmptyData(){
+      let { data } = this.state
+      return Object.keys(data).length === 0 && data.constructor === Object ? true : false
   }
 
   handleFormChange(name,e){
