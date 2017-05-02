@@ -101,14 +101,11 @@ export default class App extends Component {
   }
 
   setResultsSearch(response){
-      let data = response.data,
-      carTypes = data.MetaData.CarMetaData.CarTypes,
-      results = data.Result
       this.setState({
           loading:false,
-          data,
-          carTypes,
-          results,
+          data:response.data,
+          carTypes:response.data.MetaData.CarMetaData.CarTypes,
+          results:response.data.Result,
       })
   }
 
@@ -126,7 +123,6 @@ export default class App extends Component {
 
 
   fetchSearchResults(){
-      let data, carTypes, results
       axios.get('http://crossorigin.me/http://api.hotwire.com/v1/search/car', {
         params: {
             apikey:'23eecj3fhsxpwpgv967jywcr',
@@ -139,10 +135,11 @@ export default class App extends Component {
         }
       }).then(function(response){
           this.setResultsSearch(response)
-      }.bind(this)).catch(function(error){
+      }.bind(this)).catch(function(){
           this.setResultsError()
     }.bind(this))
   }
+
 }
 
 render(<App/>, document.getElementById('app'));
