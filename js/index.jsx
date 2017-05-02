@@ -19,7 +19,9 @@ export default class App extends Component {
   render() {
          let today = moment().format("MM/DD/YYYY"),
           tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
+       isEmptyData = Object.keys(this.state.data).length === 0 && this.state.data.constructor === Object ? true : false,
     displayContent = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
+    displayContent = isEmptyData ? this.getEmptyDataMessage() : displayContent
     displayContent = this.state.networkError ? this.getResultsError() : displayContent
     return (
         <div>
@@ -51,9 +53,16 @@ export default class App extends Component {
       this.fetchSearchResults()
   }
 
+  getEmptyDataMessage(){
+      return (
+          <li className="border mb2 rounded p1 bg-white center">Please enter a "Location" and "Pick Up" and "Drop Off" dates.</li>
+      )
+  }
+
   setLoadingMessage(){
       this.setState({
-          loading: true
+          loading: true,
+          data:{"has":"data"}
       })
   }
 
