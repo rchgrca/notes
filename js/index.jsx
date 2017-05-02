@@ -30,17 +30,17 @@ export default class App extends Component {
         <div>
             <div className="clearfix">
                 <section className="sm-col sm-col-3 px1">
-                    <h2 className="center">Find</h2>
+                    <p className="h2 center">Find</p>
                     <div className="border mb1 rounded p1 bg-white clearfix border--green">
                         <div className="mb1"><label className="right-align col col-3 mr1">Airport</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
                         <div className="mb1"><label className="right-align col col-3 mr1">Pick Up</label><input type="text" name="pickup" placeholder={today}/></div>
                         <div className="mb1"><label className="right-align col col-3 mr1">Drop Off</label><input type="text" name="dropoff" placeholder={tomorrow}/></div>
-                        <div className="mb1 right-align col col-8"><button className="border rounded bg-green white" onClick={this.handleClick}>Search</button></div>
+                        <div className="mb1 right-align col col-8"><button className="h4 border rounded bg-green white" onClick={this.handleClick}>Search</button></div>
                     </div>
                 </section>
                 <section className="sm-col sm-col-9 px1">
                     <div>
-                        <h2 className="center">Available</h2>
+                        <p className="h2 center">Available</p>
                         <ul className="list-reset mt0">
                            {displayContent}
                         </ul>
