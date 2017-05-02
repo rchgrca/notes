@@ -9,14 +9,15 @@ export default class App extends Component {
     this.state = {
         networkError:false,
         loading:false,
-        airport:'SFO',
-        dropoff:moment().format("MM/DD/YYYY"),
-        pickup:moment().add(7,'days').format("MM/DD/YYYY"),
+        airport:'',
+        dropoff:'',
+        pickup:'',
         data:{},
         carTypes:[],
         results:[]
     }
-    this.handleClick = this.handleClick.bind(this)
+    this.handleFormChange = this.handleFormChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   render() {
@@ -32,10 +33,21 @@ export default class App extends Component {
                 <section className="sm-col sm-col-3 px1">
                     <p className="h2 center">Find</p>
                     <div className="border mb1 rounded p1 bg-white clearfix border--green">
-                        <div className="mb1"><label className="right-align col col-3 mr1">Airport</label><input type="text" className="" name="location" placeholder={"SFO"}/></div>
-                        <div className="mb1"><label className="right-align col col-3 mr1">Pick Up</label><input type="text" name="pickup" placeholder={today}/></div>
-                        <div className="mb1"><label className="right-align col col-3 mr1">Drop Off</label><input type="text" name="dropoff" placeholder={tomorrow}/></div>
-                        <div className="mb1 right-align col col-8"><button className="h4 border rounded bg-green white" onClick={this.handleClick}>Search</button></div>
+                        <div className="mb1">
+                            <label className="right-align col col-3 mr1">Airport</label>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={this.state.airport} className="col-3" placeholder={"SFO"}/>
+                        </div>
+                        <div className="mb1">
+                            <label className="right-align col col-3 mr1">Pick Up</label>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={this.state.pickup} className="col-3" placeholder={today}/>
+                        </div>
+                        <div className="mb1">
+                            <label className="right-align col col-3 mr1">Drop Off</label>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={this.state.dropoff} className="col-3" placeholder={tomorrow}/>
+                        </div>
+                        <div className="mb1 center">
+                            <button className="h4 border rounded bg-green white" onClick={this.handleSubmit}>Search</button>
+                        </div>
                     </div>
                 </section>
                 <section className="sm-col sm-col-9 px1">
@@ -51,7 +63,11 @@ export default class App extends Component {
     )
   }
 
-  handleClick(){
+  handleFormChange(name,e){
+      this.setState({[name]:event.target.value})
+  }
+
+  handleSubmit(){
       this.setLoadingMessage()
       this.fetchSearchResults()
   }
@@ -130,13 +146,14 @@ export default class App extends Component {
 
 
   fetchSearchResults(){
+      let { airport, pickup, dropoff } = this.state
       axios.get('http://crossorigin.me/http://api.hotwire.com/v1/search/car', {
         params: {
             apikey:'23eecj3fhsxpwpgv967jywcr',
             format:'json',
-            dest:'SFO',
-            startdate:'07/04/2017',
-            enddate:'07/05/2017',
+            dest:airport,
+            startdate:pickup,
+            enddate:dropoff,
             pickuptime:'10:00',
             dropofftime:'13:30'
         }
