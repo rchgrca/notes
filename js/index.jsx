@@ -69,11 +69,6 @@ export default class App extends Component {
 
       return (
           results.map((o,i) => {
-              let css = {
-                  container: "",
-                  label: "bold",
-                  value: ""
-              }
               let thisCarType = carTypes.filter((a) => {
                   if(a.CarTypeCode === o.CarTypeCode){
                       return a
