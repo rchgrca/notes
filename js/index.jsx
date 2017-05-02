@@ -7,6 +7,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+        networkError:false,
         loading:false,
         data:{},
         carTypes:[],
@@ -18,7 +19,8 @@ export default class App extends Component {
   render() {
     let today = moment().format("MM/DD/YYYY"),
      tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
-    isLoading = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
+    displayContent = this.state.loading ? this.getLoadingMessage() : this.setResultsDisplay()
+    displayContent = this.state.networkError ? this.getResultsError() : displayContent
     return (
         <div>
             <div className="clearfix">
@@ -35,7 +37,7 @@ export default class App extends Component {
                     <div>
                         <h2 className="center">Available</h2>
                         <ul className="list-reset mt0">
-                           {isLoading}
+                           {displayContent}
                         </ul>
                     </div>
                 </section>
@@ -57,7 +59,7 @@ export default class App extends Component {
 
   getLoadingMessage(){
       return (
-          <li className="border mb2 rounded p1 bg-white center">Loading...</li>
+          <li className="border mb2 rounded p1 bg-white center"><img src="https://css-tricks.com/wp-content/uploads/2011/02/spinnnnnn.gif"/></li>
       )
   }
 
@@ -110,15 +112,15 @@ export default class App extends Component {
       })
   }
 
-  setResultsError(error){
-      console.log('error', error)
-      let data = {},
-      carTypes = [{CarTypeCode:"error"}],
-      results = [{CarTypeCode:"error",CarTypeName:"Network Error.  Please Try Again"}]
+  getResultsError(error){
+      return (
+          <li className="border mb2 rounded p1 bg-white center">Network Error.  Please refresh and try again.</li>
+      )
+  }
+
+  setResultsError(){
       this.setState({
-          data,
-          carTypes,
-          results,
+          networkError:true
       })
   }
 
@@ -138,7 +140,7 @@ export default class App extends Component {
       }).then(function(response){
           this.setResultsSearch(response)
       }.bind(this)).catch(function(error){
-          this.setResultsError(error)
+          this.setResultsError()
     }.bind(this))
   }
 }
