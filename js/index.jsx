@@ -12,7 +12,6 @@ export default class App extends Component {
         airport:'',
         dropoff:'',
         pickup:'',
-        data:{},
         carTypes:[],
         results:[]
     }
@@ -21,14 +20,14 @@ export default class App extends Component {
   }
 
   render() {
+    let { loading, networkError, results, airport, pickup, dropoff } = this.state
     let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
-        nextweek = moment().add(7,'days').format("MM/DD/YYYY"),
-    displayContent
-
-    let { loading, networkError, airport, pickup, dropoff } = this.state
+        nextweek = moment().add(8,'days').format("MM/DD/YYYY"),
+         hasData = results.length ? true : false,
+        displayContent
 
     displayContent = loading ? this.getLoadingMessage() : this.setResultsDisplay()
-    displayContent = this.isEmptyData() ? this.getEmptyDataMessage() : displayContent
+    displayContent = hasData ? displayContent : this.getEmptyDataMessage(),
     displayContent = networkError ? this.getResultsError() : displayContent
 
     return (
@@ -67,11 +66,6 @@ export default class App extends Component {
     )
   }
 
-  isEmptyData(){
-      let { data } = this.state
-      return Object.keys(data).length === 0 && data.constructor === Object ? true : false
-  }
-
   handleFormChange(name,e){
       this.setState({[name]:event.target.value})
   }
@@ -90,7 +84,7 @@ export default class App extends Component {
   setLoadingMessage(){
       this.setState({
           loading: true,
-          data:{"has":"data"}
+          results:["gettingdata"]
       })
   }
 
@@ -134,7 +128,6 @@ export default class App extends Component {
   setResultsSearch(response){
       this.setState({
           loading:false,
-          data:response.data,
           carTypes:response.data.MetaData.CarMetaData.CarTypes,
           results:response.data.Result,
       })
