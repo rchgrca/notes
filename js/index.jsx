@@ -9,6 +9,9 @@ export default class App extends Component {
     this.state = {
         networkError:false,
         loading:false,
+        location:'SFO',
+        dropoff:moment().format("MM/DD/YYYY"),
+        pickup:moment().add(7,'days').format("MM/DD/YYYY"),
         data:{},
         carTypes:[],
         results:[]
@@ -68,7 +71,7 @@ export default class App extends Component {
 
   getLoadingMessage(){
       return (
-          <li className="border mb2 rounded p1 bg-white center"><img src="https://css-tricks.com/wp-content/uploads/2011/02/spinnnnnn.gif"/></li>
+          <li className="border mb2 rounded p1 bg-white center"><span className="green">Loading...</span></li>
       )
   }
 
@@ -115,7 +118,7 @@ export default class App extends Component {
 
   getResultsError(error){
       return (
-          <li className="border mb2 rounded p1 bg-white center">Network Error.  Please refresh and try again.</li>
+          <li className="border mb2 rounded p1 bg-white center"><span className="red">Network Error.  Please refresh and try again.</span></li>
       )
   }
 
