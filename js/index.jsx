@@ -126,10 +126,20 @@ export default class App extends Component {
   }
 
   setResultsSearch(response){
+      let {
+          data: {
+              Result,
+              MetaData: {
+                  CarMetaData: {
+                      CarTypes
+                  }
+              }
+          }
+      } = response
       this.setState({
           loading:false,
-          carTypes:response.data.MetaData.CarMetaData.CarTypes,
-          results:response.data.Result,
+          carTypes:CarTypes,
+          results:Result
       })
   }
 
