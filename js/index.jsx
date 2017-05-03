@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 import moment from 'moment'
-import StatusMessage from './components/StatusMessage.jsx'
+import StatusMessage from './components/statusMessage.jsx'
+import SearchResults from './components/searchResults.jsx'
 
 export default class App extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ export default class App extends Component {
   }
 
   render() {
-    let { loading, networkError, results, airport, pickup, dropoff } = this.state
+    let { loading, networkError, carTypes, results, airport, pickup, dropoff } = this.state
     let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
         nextweek = moment().add(8,'days').format("MM/DD/YYYY"),
        hasNoData = !results.length ? true : false,
@@ -39,7 +40,8 @@ export default class App extends Component {
             displayContent = <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
             break
         default:
-            displayContent = this.setResultsDisplay()
+            //displayContent = this.setResultsDisplay()
+            displayContent = <SearchResults carTypes={carTypes} results={results}/>
             break
     }
 
@@ -152,11 +154,18 @@ export default class App extends Component {
 
 
   fetchSearchResults(){
-      let { airport, pickup, dropoff } = this.state
-      axios.get('http://crossorigin.me/http://api.hotwire.com/v1/search/car', {
+      const apikey = '23eecj3fhsxpwpgv967jywcr',
+      crossorigin = 'http://crossorigin.me/http://api.hotwire.com/v1/search/car',
+      herokuapp = 'http://hotwire.herokuapp.com/v1/search/car',
+      format = 'json'
+
+      let { airport, pickup, dropoff } = this.state,
+      domain = (false) ? crossorigin : herokuapp
+      
+      axios.get(domain, {
         params: {
-            apikey:'23eecj3fhsxpwpgv967jywcr',
-            format:'json',
+            apikey,
+            format,
             dest:airport,
             startdate:pickup,
             enddate:dropoff,
