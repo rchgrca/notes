@@ -28,15 +28,20 @@ export default class App extends Component {
        statusCSS = 'border mb2 rounded p1 bg-white center border--green',
         displayContent
 
-    displayContent = loading ?
-        <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
-        : this.setResultsDisplay()
-    displayContent = hasNoData ?
-        <StatusMessage classNames={statusCSS}>Please enter a "Location" and "Pick Up" and "Drop Off" dates</StatusMessage>
-        : displayContent
-    displayContent = networkError ?
-        <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
-        : displayContent
+    switch(true){
+        case loading:
+            displayContent = <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
+            break
+        case hasNoData:
+            displayContent = <StatusMessage classNames={statusCSS}>Please enter a "Location" and "Pick Up" and "Drop Off" dates</StatusMessage>
+            break
+        case networkError:
+            displayContent = <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
+            break
+        default:
+            displayContent = this.setResultsDisplay()
+            break
+    }
 
     return (
         <div>
