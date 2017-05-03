@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 import moment from 'moment'
+import StatusMessage from './components/StatusMessage.jsx'
 
 export default class App extends Component {
   constructor(props) {
@@ -23,12 +24,19 @@ export default class App extends Component {
     let { loading, networkError, results, airport, pickup, dropoff } = this.state
     let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
         nextweek = moment().add(8,'days').format("MM/DD/YYYY"),
-         hasData = results.length ? true : false,
+       hasNoData = !results.length ? true : false,
+       statusCSS = 'border mb2 rounded p1 bg-white center border--green',
         displayContent
 
-    displayContent = loading ? this.getLoadingMessage() : this.setResultsDisplay()
-    displayContent = hasData ? displayContent : this.getEmptyDataMessage(),
-    displayContent = networkError ? this.getResultsError() : displayContent
+    displayContent = loading ?
+        <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
+        : this.setResultsDisplay()
+    displayContent = hasNoData ?
+        <StatusMessage classNames={statusCSS}>Please enter a "Location" and "Pick Up" and "Drop Off" dates</StatusMessage>
+        : displayContent
+    displayContent = networkError ?
+        <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
+        : displayContent
 
     return (
         <div>
@@ -75,23 +83,11 @@ export default class App extends Component {
       this.fetchSearchResults()
   }
 
-  getEmptyDataMessage(){
-      return (
-          <li className="border mb2 rounded p1 bg-white center border--green">Please enter a "Location" and "Pick Up" and "Drop Off" dates.</li>
-      )
-  }
-
   setLoadingMessage(){
       this.setState({
           loading: true,
           results:["gettingdata"]
       })
-  }
-
-  getLoadingMessage(){
-      return (
-          <li className="border mb2 rounded p1 bg-white center border--green"><span className="green">Loading...</span></li>
-      )
   }
 
   setResultsDisplay(){
@@ -141,12 +137,6 @@ export default class App extends Component {
           carTypes:CarTypes,
           results:Result
       })
-  }
-
-  getResultsError(error){
-      return (
-          <li className="border mb2 rounded p1 bg-white center border--green"><span className="red">Network Error.  Please refresh and try again.</span></li>
-      )
   }
 
   setResultsError(){
