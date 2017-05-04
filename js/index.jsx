@@ -128,14 +128,14 @@ export default class App extends Component {
 
       let listErrors = errors.map((o,i) => {
             return (
-                <li className="left-align red capitalize">{o.ErrorMessage}</li>
+                <li className="left-align capitalize">{o.ErrorMessage}</li>
             )
       })
 
 
       let errorContent = (
           <div className="mx-auto p1">
-              <div className="center mb1 capitalize">Hotwire API: "{statusDesc}"</div>
+              <div className="center mb1 capitalize red">Hotwire API: "{statusDesc}"</div>
               <ol>
                   {listErrors}
               </ol>
