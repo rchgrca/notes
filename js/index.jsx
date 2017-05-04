@@ -25,15 +25,15 @@ export default class App extends Component {
   }
 
   render() {
-    let { loading, networkError, errors, carTypes, results, airport, pickup, dropoff } = this.state
+    let { loading, networkError, statusDesc, errors, carTypes, results, airport, pickup, dropoff } = this.state
     let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
         nextweek = moment().add(8,'days').format("MM/DD/YYYY"),
        hasNoData = !results.length ? true : false,
        hasErrors = errors.length ? true : false,
     containerCSS = "list-reset mt0",
-       statusCSS = 'border mb2 rounded p1 bg-white center border--green',
+       statusCSS = 'border mb2 rounded p1 bg-white center border--green clearfix',
         displayContent
-        
+
     switch(true){
         case networkError:
             displayContent = (
@@ -45,7 +45,7 @@ export default class App extends Component {
         case hasErrors:
             displayContent = (
                 <ContentContainer classNames={containerCSS}>
-                    <StatusMessage classNames={statusCSS}>Validation Errors</StatusMessage>
+                    <StatusMessage classNames={statusCSS}>{this.getValidationErrors()}</StatusMessage>
                 </ContentContainer>
             )
             break
@@ -121,6 +121,29 @@ export default class App extends Component {
           loading: true,
           results:["gettingdata"]
       })
+  }
+
+  getValidationErrors() {
+      let { statusDesc, errors } = this.state
+
+      let listErrors = errors.map((o,i) => {
+            return (
+                <li className="left-align red">{o.ErrorMessage}</li>
+            )
+      })
+
+
+      let errorContent = (
+          <div className="mx-auto p1 col-4">
+              <div className="center mb1">Hotwire API: "{statusDesc}"</div>
+              <ol>
+                  {listErrors}
+              </ol>
+          </div>
+      )
+
+
+      return errorContent
   }
 
   setResultsDisplay(){
