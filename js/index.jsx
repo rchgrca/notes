@@ -128,14 +128,14 @@ export default class App extends Component {
 
       let listErrors = errors.map((o,i) => {
             return (
-                <li className="left-align red">{o.ErrorMessage}</li>
+                <li className="left-align red capitalize">{o.ErrorMessage}</li>
             )
       })
 
 
       let errorContent = (
-          <div className="mx-auto p1 col-4">
-              <div className="center mb1">Hotwire API: "{statusDesc}"</div>
+          <div className="mx-auto p1">
+              <div className="center mb1 capitalize">Hotwire API: "{statusDesc}"</div>
               <ol>
                   {listErrors}
               </ol>
@@ -190,6 +190,7 @@ export default class App extends Component {
               } = {}
           }
       } = response
+      Errors = Errors.Error  ? [Errors.Error] : Errors
       this.setState({
           loading:false,
           errors:Errors,
