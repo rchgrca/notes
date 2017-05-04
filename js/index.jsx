@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 import moment from 'moment'
+import ContentContainer from './components/ContentContainer.jsx'
 import StatusMessage from './components/statusMessage.jsx'
 import SearchResults from './components/searchResults.jsx'
 
@@ -14,6 +15,8 @@ export default class App extends Component {
         airport:'',
         dropoff:'',
         pickup:'',
+        statusDesc:'',
+        errors:[],
         carTypes:[],
         results:[]
     }
@@ -22,26 +25,51 @@ export default class App extends Component {
   }
 
   render() {
-    let { loading, networkError, carTypes, results, airport, pickup, dropoff } = this.state
+    let { loading, networkError, errors, carTypes, results, airport, pickup, dropoff } = this.state
     let tomorrow = moment().add(1,'days').format("MM/DD/YYYY"),
         nextweek = moment().add(8,'days').format("MM/DD/YYYY"),
        hasNoData = !results.length ? true : false,
+       hasErrors = errors.length ? true : false,
+    containerCSS = "list-reset mt0",
        statusCSS = 'border mb2 rounded p1 bg-white center border--green',
         displayContent
-
+        
     switch(true){
+        case networkError:
+            displayContent = (
+                <ContentContainer classNames={containerCSS}>
+                    <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
+                </ContentContainer>
+            )
+            break
+        case hasErrors:
+            displayContent = (
+                <ContentContainer classNames={containerCSS}>
+                    <StatusMessage classNames={statusCSS}>Validation Errors</StatusMessage>
+                </ContentContainer>
+            )
+            break
         case loading:
-            displayContent = <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
+            displayContent = (
+                <ContentContainer classNames={containerCSS}>
+                    <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
+                </ContentContainer>
+            )
             break
         case hasNoData:
-            displayContent = <StatusMessage classNames={statusCSS}>Please enter a "Location" and "Pick Up" and "Drop Off" dates</StatusMessage>
-            break
-        case networkError:
-            displayContent = <StatusMessage classNames={statusCSS}><span className="red">Network Error.  Please refresh and try again.</span></StatusMessage>
+            displayContent = (
+                <ContentContainer classNames={containerCSS}>
+                    <StatusMessage classNames={statusCSS}>Please enter a "Location" and "Pick Up" and "Drop Off" dates</StatusMessage>
+                </ContentContainer>
+            )
             break
         default:
-            //displayContent = this.setResultsDisplay()
-            displayContent = <SearchResults carTypes={carTypes} results={results}/>
+            displayContent = (
+                <ContentContainer classNames={containerCSS}>
+                    {this.setResultsDisplay()}
+                </ContentContainer>
+            )
+            //displayContent = <SearchResults carTypes={carTypes} results={results}/>
             break
     }
 
@@ -71,9 +99,7 @@ export default class App extends Component {
                 <section className="sm-col sm-col-9 px1">
                     <div>
                         <p className="h2 center">Available</p>
-                        <ul className="list-reset mt0">
-                           {displayContent}
-                        </ul>
+                        {displayContent}
                     </div>
                 </section>
             </div>
@@ -131,17 +157,21 @@ export default class App extends Component {
   setResultsSearch(response){
       let {
           data: {
-              Result,
+              Errors,
+              StatusDesc,
+              Result = [],
               MetaData: {
                   CarMetaData: {
-                      CarTypes
-                  }
-              }
+                      CarTypes = []
+                  } = {}
+              } = {}
           }
       } = response
       this.setState({
           loading:false,
+          errors:Errors,
           carTypes:CarTypes,
+          statusDesc:StatusDesc,
           results:Result
       })
   }
@@ -161,7 +191,7 @@ export default class App extends Component {
 
       let { airport, pickup, dropoff } = this.state,
       domain = (false) ? crossorigin : herokuapp
-      
+
       axios.get(domain, {
         params: {
             apikey,
