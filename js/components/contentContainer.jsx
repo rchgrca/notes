@@ -3,11 +3,13 @@ import { render } from 'react-dom';
 
 export default class ContentContainer extends Component {
     render() {
-        let { classNames } = this.props
+        let { classNames, ol } = this.props
         return (
-           <ul className={classNames}>
-               {this.props.children}
-           </ul>
+            ol ?
+                <ol className={classNames}>{this.props.children}</ol>
+                :
+                <ul className={classNames}>{this.props.children}</ul>
         )
     }
 }
+ContentContainer.defaultProps = { ol: false };
