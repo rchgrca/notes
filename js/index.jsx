@@ -78,15 +78,15 @@ export default class App extends Component {
                     <div className="border mb1 rounded p1 bg-white clearfix border--green">
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Airport</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={airport} className="field col-3" placeholder={"SFO"}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={airport} className="field col-8" placeholder={"SFO"}/>
                         </div>
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Pick Up</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={pickup} className="field col-3" placeholder={tomorrow}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={pickup} className="field col-8" placeholder={tomorrow}/>
                         </div>
                         <div className="mb1">
                             <label className="right-align col col-3 mr1">Drop Off</label>
-                            <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={dropoff} className="field col-3" placeholder={nextweek}/>
+                            <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={dropoff} className="field col-8" placeholder={nextweek}/>
                         </div>
                         <div className="center">
                             <button className="h4 rounded bg-green white" onClick={this.handleSubmit}>Search</button>
