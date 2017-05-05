@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { render } from 'react-dom'
 import axios from 'axios'
 import moment from 'moment'
-import ContentContainer from './components/ContentContainer.jsx'
+import ContentContainer from './components/contentContainer.jsx'
 import StatusMessage from './components/statusMessage.jsx'
 import SearchResults from './components/searchResults.jsx'
 
@@ -65,11 +65,8 @@ export default class App extends Component {
             break
         default:
             displayContent = (
-                <ContentContainer classNames={containerCSS}>
-                    {this.setResultsDisplay()}
-                </ContentContainer>
+                <SearchResults carTypes={carTypes} results={results} containerCSS={containerCSS}/>
             )
-            //displayContent = <SearchResults carTypes={carTypes} results={results}/>
             break
     }
 
@@ -132,7 +129,6 @@ export default class App extends Component {
             )
       })
 
-
       let errorContent = (
           <div className="mx-auto p1">
               <div className="center mb1 capitalize red">Hotwire API: "{statusDesc}"</div>
@@ -144,37 +140,6 @@ export default class App extends Component {
 
 
       return errorContent
-  }
-
-  setResultsDisplay(){
-      let { carTypes, results } = this.state
-
-      return (
-          results.map((o,i) => {
-              let thisCarType = carTypes.filter((a) => {
-                  if(a.CarTypeCode === o.CarTypeCode){
-                      return a
-                  }
-              })
-              return (
-                  <li key={i} className="border mb2 rounded p1 bg-white  border--green">
-                      <h3 className="mt0">{thisCarType[0].CarTypeName}</h3>
-                      <div className="mb1"><div className="bold">Models: </div><div>{thisCarType[0].PossibleModels}</div></div>
-                      <div className="mb1"><div className="bold">Features:  </div><div>{thisCarType[0].PossibleFeatures}</div></div>
-                      <div className="mb1"><div className="bold">Seats:  </div><div>{thisCarType[0].TypicalSeating}</div></div>
-                      <div className="mb1"><div className="bold">Mileage:  </div><div>{o.MileageDescription}</div></div>
-                      <div className="mb1"><div className="bold">Location:  </div><div>{o.LocationDescription} ({o.PickupAirport})</div></div>
-                      <div className="mb1"><div className="bold">Daily Rate:  </div><div>${o.DailyRate}</div></div>
-                      <div className="mb1"><div className="bold">Pick Up:  </div><div>{o.PickupDay} at {o.PickupTime}</div></div>
-                      <div className="mb1"><div className="bold">Drop Off:  </div><div>{o.DropoffDay} at {o.DropoffTime}</div></div>
-                      <div className="mb1"><div className="bold">Rental Days:  </div><div>{o.RentalDays}</div></div>
-                      <div className="mb1"><div className="bold">Sub Total:  </div><div>${o.SubTotal}</div></div>
-                      <div className="mb1"><div className="bold">Taxes & Fees:  </div><div>${o.TaxesAndFees}</div></div>
-                      <div className="mb1"><div className="bold">Total Price:  </div><div>${o.TotalPrice}</div></div>
-                  </li>
-              )
-          })
-      )
   }
 
   setResultsSearch(response){
