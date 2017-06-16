@@ -24,7 +24,7 @@ export default class SearchResults extends Component {
                     }
                 })
                 return (
-                    <li key={i} className="border mb2 rounded p1 bg-white  border--green">
+                    <li key={i} className="border mb2 rounded p1 bg-slategray silver muted border--black">
                         <h3 className="mt0">{thisCarType[0].CarTypeName}</h3>
                         <div className="mb1"><div className="bold">Models: </div><div>{thisCarType[0].PossibleModels}</div></div>
                         <div className="mb1"><div className="bold">Features:  </div><div>{thisCarType[0].PossibleFeatures}</div></div>

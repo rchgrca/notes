@@ -31,7 +31,7 @@ export default class App extends Component {
        hasNoData = !results.length ? true : false,
        hasErrors = errors.length ? true : false,
     containerCSS = "list-reset mt0",
-       statusCSS = 'border mb2 rounded p1 bg-white center border--green clearfix',
+       statusCSS = 'border mb2 rounded p1 bg-slategray center silver muted border--black clearfix',
         displayContent
 
     switch(true){
@@ -52,7 +52,7 @@ export default class App extends Component {
         case loading:
             displayContent = (
                 <ContentContainer classNames={containerCSS}>
-                    <StatusMessage classNames={statusCSS}><span className="green">Loading...</span></StatusMessage>
+                    <StatusMessage classNames={statusCSS}><span className="silver muted">Loading...</span></StatusMessage>
                 </ContentContainer>
             )
             break
@@ -74,28 +74,28 @@ export default class App extends Component {
         <div>
             <div className="clearfix">
                 <section className="sm-col sm-col-3 px1">
-                    <p className="h2 center">Find</p>
-                    <div className="border mb1 rounded p1 bg-white clearfix border--green">
+                    <p className="h2 center silver muted">Find</p>
+                    <div className="border mb1 rounded p1 bg-slategray clearfix border--black">
                         <div className="mb1">
-                            <label className="right-align col col-3 mr1">Airport</label>
+                            <label className="right-align col col-3 mr1 silver muted">Airport</label>
                             <input type="text" onChange={this.handleFormChange.bind(this,'airport')} value={airport} className="field col-8" placeholder={"SFO"}/>
                         </div>
                         <div className="mb1">
-                            <label className="right-align col col-3 mr1">Pick Up</label>
+                            <label className="right-align col col-3 mr1 silver muted">Pick Up</label>
                             <input type="text" onChange={this.handleFormChange.bind(this,'pickup')} value={pickup} className="field col-8" placeholder={tomorrow}/>
                         </div>
                         <div className="mb1">
-                            <label className="right-align col col-3 mr1">Drop Off</label>
+                            <label className="right-align col col-3 mr1 silver muted">Drop Off</label>
                             <input type="text" onChange={this.handleFormChange.bind(this,'dropoff')} value={dropoff} className="field col-8" placeholder={nextweek}/>
                         </div>
                         <div className="center">
-                            <button className="h4 rounded bg-green white" onClick={this.handleSubmit}>Search</button>
+                            <button className="h4 rounded bg-orange white muted" onClick={this.handleSubmit}>Search</button>
                         </div>
                     </div>
                 </section>
                 <section className="sm-col sm-col-9 px1">
                     <div>
-                        <p className="h2 center">Available</p>
+                        <p className="h2 center silver muted">Available</p>
                         {displayContent}
                     </div>
                 </section>
@@ -131,7 +131,7 @@ export default class App extends Component {
 
       let errorContent = (
           <div className="mx-auto p1">
-              <div className="center mb1 capitalize red">Hotwire API: "{statusDesc}"</div>
+              <div className="center mb1 capitalize background-white red">Hotwire API: "{statusDesc}"</div>
               <ol>
                   {listErrors}
               </ol>

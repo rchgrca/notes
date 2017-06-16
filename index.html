@@ -8,11 +8,25 @@
         <link rel="stylesheet" href="https://unpkg.com/basscss@8.0.2/css/basscss.min.css" >
         <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
         <style>
-            body {font-family: Arial,Helvetica Neue,Helvetica,sans-serif;}
-            .capitalize {text-transform: capitalize;}
+            html {
+                height: 100%;
+            }
+            body {
+                font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+                background: linear-gradient(to bottom,#193A54,#4DAAA7);
+            }
+            .bg-slategray {
+                background: slategray;
+            }
+            .capitalize {
+                text-transform: capitalize;
+            }
+            ::-webkit-input-placeholder {
+                opacity: 0.25;
+            }
         </style>
     </head>
-    <body class="bg-silver">
+    <body class="bg-navy">
         <div id="app" />
         <script type="text/javascript" src="js/bundle.js"></script>
     </body>
